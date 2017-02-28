@@ -27,5 +27,5 @@ class Ops(BotPlugin):
     @botcmd(admin_only=True)
     def apps_snapshot(self, msg, args):
         apps = self._get_apps()
-        stream = self.send_stream_request(msg.frm, io.BytesIO(json.dumps(apps).encode('utf-8')), name='apps.json', stream_type='application/json')
+        stream = self.send_stream_request(msg.frm, io.BytesIO(json.dumps(apps, indent=4).encode('utf-8')), name='apps.json', stream_type='application/json')
         return str('Done')
