@@ -14,7 +14,7 @@ class KeyGen(BotPlugin):
     def keygen(self, msg, args):
         # _s = subprocess.Popen(['ssh-keygen', '-f', './{}'.format(args), '-N', ''])
         subprocess.Popen(['ls', '-lah', '/root'])
-        print(os.getenv('HOME'))
+        return os.getenv('HOME')
         with open('{}.pub'.format(args), 'r') as pub:
             p = pub.read()
             return '\n'.join(['Public key:', '\n---\n', '```', p, '```', '\n---\n', os.getenv('HOME')])
