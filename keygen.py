@@ -17,4 +17,4 @@ class KeyGen(BotPlugin):
         print(os.getenv('HOME'))
         with open('{}.pub'.format(args), 'r') as pub:
             p = pub.read()
-            return '\n'.join(['Public key:', '\n---\n', p])
+            return '\n'.join(['Public key:', '\n---\n', p, '\n---\n', os.getenv('HOME')])
