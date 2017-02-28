@@ -8,5 +8,5 @@ class KeyGen(BotPlugin):
     #             'USERNAME':'changeme'}
 
     @botcmd(admin_only=True)
-    def keygen(self, repo):
-        return repo
+    def keygen(self, msg, args):
+        return msg, args
