@@ -1,4 +1,6 @@
 import os
+
+import io
 import requests
 import subprocess
 
@@ -18,10 +20,11 @@ class Ops(BotPlugin):
         apps = http.get(url=murl)
         return apps.json()
 
-    def _get_apps(self)->list:
-        return self._get().get('apps', [])
+    def _get_apps(self)->dict:
+        return self._get()
 
     @botcmd(admin_only=True)
     def apps_snapshot(self, msg, args):
         apps = self._get_apps()
-        return str(apps)
+        stream = self.send_stream_request(msg.frm, io.StringIO(apps), name='apps.json', stream_type='application/json')
+        return str('Done')
