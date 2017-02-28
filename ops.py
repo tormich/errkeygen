@@ -24,7 +24,11 @@ class Ops(BotPlugin):
     def _get_apps(self)->dict:
         return self._get()
 
-    @botcmd(admin_only=True)
+    @botcmd(admin_only=False)
+    def apps_vports(self, msg, args):
+
+
+    @botcmd(admin_only=False)
     def apps_snapshot(self, msg, args):
         apps = self._get_apps()
         stream = self.send_stream_request(msg.frm, io.BytesIO(json.dumps(apps, indent=4).encode('utf-8')), name='apps.json', stream_type='application/json')
