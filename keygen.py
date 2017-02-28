@@ -7,6 +7,6 @@ class KeyGen(BotPlugin):
         return {'ID_TOKEN': '00112233445566778899aabbccddeeff',
                 'USERNAME':'changeme'}
 
-    @botcmd(name='keygen')
+    @botcmd(name='keygen', template='qqq')
     def keygen(self):
         return os.getenv('PWD')
