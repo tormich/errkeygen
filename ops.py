@@ -25,7 +25,7 @@ class Ops(BotPlugin):
         return self._get()
 
     @botcmd(admin_only=False)
-    def apps(self, msg): return 'not implemented!'
+    def apps(self, msg, args): return 'not implemented!'
     @botcmd(admin_only=False)
     def apps_scale(self, msg, args): return 'not implemented!'
     @botcmd(admin_only=False)
