@@ -15,5 +15,4 @@ class KeyGen(BotPlugin):
         _s = subprocess.Popen(['ssh-keygen', '-f', args, '-N', ''])
         with open('{}.pub'.format(args), 'r') as pub:
             p = pub.read()
-        return '\n'.join(['Public key:', '\n---\n', p])
-o
+            return '\n'.join(['Public key:', '\n---\n', p])
