@@ -26,7 +26,7 @@ class Ops(BotPlugin):
 
     @botcmd(admin_only=False)
     def apps_vports(self, msg, args):
-
+        pass
 
     @botcmd(admin_only=False)
     def apps_snapshot(self, msg, args):
