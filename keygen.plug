@@ -1,9 +1,9 @@
 [Core]
-Name = Kgen
+Name = Keygen
 Module = keygen.py
 
 [Documentation]
 Description = RSA key-gen.
 
 [Python]
-Version = '3'
+Version = 3
