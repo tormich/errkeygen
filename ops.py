@@ -58,10 +58,9 @@ class Ops(BotPlugin):
         _path = '{}/.ssh/{}'.format(os.getenv('HOME'), args)
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE)
         _proc.communicate(timeout=10)
-        
+
         with open('{}.pub'.format(_path), 'r') as pub:
             p = pub.read()
             stream = self.send_stream_request(msg.frm,
                                               io.BytesIO(p.encode('utf-8')),
                                               name='{}.pub'.format(args), stream_type='text/plain')
-            return '\n'.join(['Public key:', '\n---\n', '```', p, '```', '\n---\n', os.getenv('HOME')])
