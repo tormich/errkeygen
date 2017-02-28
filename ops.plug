@@ -1,0 +1,6 @@
+[Core]
+Name = Ops
+Module = ops
+
+[Documentation]
+Description = Build and Deploy
