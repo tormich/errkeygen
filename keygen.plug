@@ -1,6 +1,6 @@
 [Core]
 Name = Keygen
-Module = keygen.py
+Module = keygen
 
 [Documentation]
 Description = RSA key-gen.
