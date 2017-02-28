@@ -5,5 +5,3 @@ Module = keygen.py
 [Documentation]
 Description = RSA key-gen.
 
-[Python]
-Version = 3
