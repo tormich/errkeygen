@@ -1,3 +1,4 @@
+import json
 import os
 
 import io
@@ -26,5 +27,5 @@ class Ops(BotPlugin):
     @botcmd(admin_only=True)
     def apps_snapshot(self, msg, args):
         apps = self._get_apps()
-        stream = self.send_stream_request(msg.frm, io.StringIO(apps), name='apps.json', stream_type='application/json')
+        stream = self.send_stream_request(msg.frm, io.StringIO(json.dumps(apps)), name='apps.json', stream_type='application/json')
         return str('Done')
