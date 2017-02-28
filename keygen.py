@@ -13,5 +13,6 @@ class KeyGen(BotPlugin):
     @botcmd(admin_only=True)
     def keygen(self, msg, args):
         _s = subprocess.Popen(['ssh-keygen', '-f', args, '-N ""'])
-        with open('{}.pub'.format(args), 'r') as pub:
-            return '\n'.join([_s, pub.read()])
+        # with open('{}.pub'.format(args), 'r') as pub:
+        #     p = pub.read()
+        return '\n'.join([_s])
