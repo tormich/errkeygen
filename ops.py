@@ -12,11 +12,14 @@ class Ops(BotPlugin):
     def get_configuration_template(self):
         return {'MARATHON_URL': 'http://marathon.mesos:8080'}
 
-    def _get(self, appid:str=None)->dict:
+    def _get(self, appid:str=None, query_param:dict=None)->dict:
         if not appid:
             appid = ''
 
         murl = '/'.join([self.config['MARATHON_URL'], 'v2/apps', appid])
+        if query_param:
+            escaped_params = '&'.join(['{}={}'.format(k, v) for k, v in query_param.items()])
+            murl = '?'.join([murl, escaped_params])
         http = requests.session()
         apps = http.get(url=murl)
         return apps.json()
@@ -25,7 +28,22 @@ class Ops(BotPlugin):
         return self._get()
 
     @botcmd(admin_only=False)
-    def apps(self, msg, args): return 'not implemented!'
+    def apps(self, msg, args):
+        apps = self._get_apps().get('apps')
+        _off, _on = [], []
+        for app in apps:
+            if app.get('instances', 0) > 0:
+                _on.append(app.get('id'))
+            else:
+                _off.append(app.get('id'))
+
+        return '\n'.join(['Off',
+                          '\n'.join(_off),
+                          '\n---\n',
+                          'On'
+                          '\n'.join(_on),
+                          ])
+
     @botcmd(admin_only=False)
     def apps_scale(self, msg, args): return 'not implemented!'
     @botcmd(admin_only=False)
