@@ -32,7 +32,6 @@ class Ops(BotPlugin):
         apps = self._get_apps().get('apps')
         _off, _on = [], []
         for app in apps:
-            app_string = '{id} ({cpus}; {mem}; {disk}) `{network}` `{img}`'.format()
             if app.get('instances', 0) > 0:
                 _on.append(app.get('id'))
             else:
