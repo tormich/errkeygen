@@ -33,9 +33,9 @@ class Ops(BotPlugin):
         _off, _on = [], []
         for app in apps:
             if app.get('instances', 0) > 0:
-                _on.append(app.get('id'))
+                _on.append(app)
             else:
-                _off.append(app.get('id'))
+                _off.append(app)
 
         return {'apps_on': _on, 'apps_off': _off}
 
