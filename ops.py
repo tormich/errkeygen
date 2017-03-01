@@ -29,6 +29,8 @@ class Ops(BotPlugin):
 
     @botcmd(admin_only=False, template='ops')
     def apps(self, msg, args):
+        """ list apps from marathon
+        """
         apps = self._get_apps().get('apps')
         _off, _on = [], []
         for app in apps:
@@ -45,8 +47,6 @@ class Ops(BotPlugin):
     def apps_restart(self, msg, args): return 'not implemented!'
     @botcmd(admin_only=False)
     def apps_delete(self, msg, args): return 'not implemented!'
-    @botcmd(admin_only=False)
-    def apps_cp(self, msg, args): return 'not implemented!'
     @botcmd(admin_only=False)
     def apps_cp(self, msg, args): return 'not implemented!'
 
