@@ -4,7 +4,7 @@
 {% if apps_on %}
 
 #:white_check_mark: Running Apps:
-{% for app in apps_on %} - {{app.id.ljust(22)}} ({{app.instances}}) `{{app.container.docker.image}}`
+{% for app in apps_on %} - {{app.id.ljust(32, ',')}} `[instances: {{app.instances}}]; image: {{app.container.docker.image}}`
 {% endfor %}
 
 {% endif %}
