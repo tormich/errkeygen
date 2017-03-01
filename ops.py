@@ -37,12 +37,17 @@ class Ops(BotPlugin):
             else:
                 _off.append(app.get('id'))
 
-        return '\n'.join(['Off',
-                          '\n'.join(_off),
-                          '\n---\n',
-                          'On'
-                          '\n'.join(_on),
-                          ])
+        msg = []
+        if _off:
+            msg.append('Off:')
+            msg.append('\n'.join(_off))
+            if _on:
+                msg.append('\n---\n')
+        if _on:
+            msg.append('On:')
+            msg.append('\n'.join(_on))
+        msg = '\n'.join(msg)
+        return msg
 
     @botcmd(admin_only=False)
     def apps_scale(self, msg, args): return 'not implemented!'
