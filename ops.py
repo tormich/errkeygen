@@ -27,11 +27,14 @@ class Ops(BotPlugin):
     def _get_apps(self)->dict:
         return self._get()
 
-    @botcmd(admin_only=False)
+    @botcmd(admin_only=False, template='ops')
     def apps(self, msg, args):
-        apps = self._get_apps().get('apps')
+        apps = self._get_apps()
+        return apps
+            # .get('apps')
         _off, _on = [], []
         for app in apps:
+            app_string = '{id} ({cpus}; {mem}; {disk}) `{network}` `{img}`'.format()
             if app.get('instances', 0) > 0:
                 _on.append(app.get('id'))
             else:
@@ -39,12 +42,12 @@ class Ops(BotPlugin):
 
         msg = []
         if _off:
-            msg.append('Off:')
+            msg.append('#Off:')
             msg.append('\n'.join(_off))
             if _on:
                 msg.append('\n---\n')
         if _on:
-            msg.append('On:')
+            msg.append('#On:')
             msg.append('\n'.join(_on))
         msg = '\n'.join(msg)
         return msg
