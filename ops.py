@@ -29,9 +29,7 @@ class Ops(BotPlugin):
 
     @botcmd(admin_only=False, template='ops')
     def apps(self, msg, args):
-        apps = self._get_apps()
-        return apps
-            # .get('apps')
+        apps = self._get_apps().get('apps')
         _off, _on = [], []
         for app in apps:
             app_string = '{id} ({cpus}; {mem}; {disk}) `{network}` `{img}`'.format()
@@ -40,17 +38,7 @@ class Ops(BotPlugin):
             else:
                 _off.append(app.get('id'))
 
-        msg = []
-        if _off:
-            msg.append('#Off:')
-            msg.append('\n'.join(_off))
-            if _on:
-                msg.append('\n---\n')
-        if _on:
-            msg.append('#On:')
-            msg.append('\n'.join(_on))
-        msg = '\n'.join(msg)
-        return msg
+        return {'apps_on': _on, 'apps_off': _off}
 
     @botcmd(admin_only=False)
     def apps_scale(self, msg, args): return 'not implemented!'
