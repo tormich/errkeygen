@@ -27,7 +27,7 @@ class Ops(BotPlugin):
     def _get_apps(self)->dict:
         return self._get()
 
-    @botcmd(admin_only=False, template='ops')
+    @botcmd(admin_only=False, template='app_list')
     def apps(self, msg, args):
         """ list apps from marathon
         """
@@ -38,7 +38,7 @@ class Ops(BotPlugin):
                 _on.append(app)
             else:
                 _off.append(app)
-
+        self.callback_message()
         return {'apps_on': _on, 'apps_off': _off}
 
     @botcmd(admin_only=False)
@@ -71,7 +71,9 @@ class Ops(BotPlugin):
         _path = '{}/.ssh/{}'.format(os.getenv('HOME'), args)
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE)
         _proc.communicate(timeout=10)
-
+        _proc = subprocess.Popen(['chmod', '400', _path], stdout=subprocess.PIPE)
+        self.send_card(_proc.stdout.read(), in_reply_to=msg)
+        
         with open('{}.pub'.format(_path), 'r') as pub:
             p = pub.read()
             stream = self.send_stream_request(msg.frm,
