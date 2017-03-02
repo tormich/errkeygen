@@ -72,8 +72,8 @@ class Ops(BotPlugin):
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE)
         _proc.communicate(timeout=10)
         _proc = subprocess.Popen(['chmod', '400', _path], stdout=subprocess.PIPE)
-        self.send_card(_proc.stdout.read(), in_reply_to=msg)
-        
+        self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
+
         with open('{}.pub'.format(_path), 'r') as pub:
             p = pub.read()
             stream = self.send_stream_request(msg.frm,
