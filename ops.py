@@ -80,6 +80,11 @@ class Ops(BotPlugin):
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
+        
+        _proc = subprocess.Popen(['chmod', '400', _path + ], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
+        self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
+        _proc.communicate(timeout=10)
 
         proc_env = {}
         _proc = subprocess.Popen(['ssh-agent', '-s'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -101,7 +106,7 @@ class Ops(BotPlugin):
 
         _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=proc_env)
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
-        self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
+        self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='blue')
         _proc.communicate(timeout=10)
 
 
