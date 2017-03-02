@@ -71,8 +71,13 @@ class Ops(BotPlugin):
         _path = '{}/.ssh/{}'.format(os.getenv('HOME'), args)
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE)
         _proc.communicate(timeout=10)
-        _proc = subprocess.Popen(['chmod', '400', _path], stdout=subprocess.PIPE)
-        self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
+        _proc = subprocess.Popen(['chmod', '400', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if _proc.stdout.read():
+            self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
+
+        if _proc.stderr.read():
+            self.send_card(_proc.stderr.read().decode(), in_reply_to=msg)
+
 
         with open('{}.pub'.format(_path), 'r') as pub:
             p = pub.read()
