@@ -98,12 +98,12 @@ class Ops(BotPlugin):
         _proc.communicate(timeout=10)
 
 
-        _proc = subprocess.Popen(['ssh-add', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        _proc = subprocess.Popen(['ssh-add', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ.copy())
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
 
-        _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ.copy())
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='blue')
         _proc.communicate(timeout=10)
