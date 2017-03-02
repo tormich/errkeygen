@@ -70,7 +70,7 @@ class Ops(BotPlugin):
 
     @botcmd(admin_only=False)
     def ssh_keygen(self, msg, args):
-        _path = '.ssh/{}'.format(os.getenv('HOME'), args)
+        _path = '{}/.ssh/{}'.format(os.getenv('HOME'), args)
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
@@ -86,25 +86,24 @@ class Ops(BotPlugin):
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
 
-        proc_env = {}
         _proc = subprocess.Popen(['ssh-agent', '-s'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         ssh_agent_strings = _proc.stdout.read().decode()
         self.send_card(ssh_agent_strings, in_reply_to=msg)
         ssh_agent_strings = ssh_agent_strings.split('\n')
 
-        proc_env['SSH_AUTH_SOCK'] = ssh_agent_strings[0].split(';')[0].split('=')[1]
-        proc_env['SSH_AGENT_PID'] = ssh_agent_strings[1].split(';')[0].split('=')[1]
+        os.environ['SSH_AUTH_SOCK'] = ssh_agent_strings[0].split(';')[0].split('=')[1]
+        os.environ['SSH_AGENT_PID'] = ssh_agent_strings[1].split(';')[0].split('=')[1]
 
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
 
 
-        _proc = subprocess.Popen(['ssh-add', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=proc_env)
+        _proc = subprocess.Popen(['ssh-add', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
 
-        _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=proc_env)
+        _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='blue')
         _proc.communicate(timeout=10)
