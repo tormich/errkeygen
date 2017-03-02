@@ -85,7 +85,10 @@ class Ops(BotPlugin):
 
         proc_env = {}
         _proc = subprocess.Popen(['ssh-agent', '-s', '>', sh_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        ssh_agent_strings = _proc.stdout.read().decode().split('\n')
+        ssh_agent_strings = _proc.stdout.read().decode()
+        self.send_card(ssh_agent_strings, in_reply_to=msg)
+        ssh_agent_strings = ssh_agent_strings.split('\n')
+
         assert len(ssh_agent_strings) == 3
         proc_env['SSH_AUTH_SOCK'] = ssh_agent_strings[0].splt(';')[0].split('=')[1]
         proc_env['SSH_AGENT_PID'] = ssh_agent_strings[1].splt(';')[0].split('=')[1]
