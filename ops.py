@@ -81,7 +81,7 @@ class Ops(BotPlugin):
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
 
-        sh_path = '/dev/null'.format_map(t)
+        sh_path = '/dev/null'
 
         proc_env = {}
         _proc = subprocess.Popen(['ssh-agent', '-s', '>', sh_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
