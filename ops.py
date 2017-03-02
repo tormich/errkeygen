@@ -78,6 +78,13 @@ class Ops(BotPlugin):
         _proc = subprocess.Popen(['ssh-add', _path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         _proc.communicate(timeout=10)
 
+        _proc = subprocess.Popen(['ssh', '-o StrictHostKeyChecking=no', '-T', 'git@github.com'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        _proc.communicate(timeout=10)
+        self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
+        self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
+
+
+
         with open('{}.pub'.format(_path), 'r') as pub:
             p = pub.read()
             stream = self.send_stream_request(msg.frm,
