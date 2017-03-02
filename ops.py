@@ -87,8 +87,8 @@ class Ops(BotPlugin):
         self.send_card(ssh_agent_strings, in_reply_to=msg)
         ssh_agent_strings = ssh_agent_strings.split('\n')
 
-        proc_env['SSH_AUTH_SOCK'] = ssh_agent_strings[0].splt(';')[0].split('=')[1]
-        proc_env['SSH_AGENT_PID'] = ssh_agent_strings[1].splt(';')[0].split('=')[1]
+        proc_env['SSH_AUTH_SOCK'] = ssh_agent_strings[0].split(';')[0].split('=')[1]
+        proc_env['SSH_AGENT_PID'] = ssh_agent_strings[1].split(';')[0].split('=')[1]
 
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
         _proc.communicate(timeout=10)
