@@ -70,7 +70,7 @@ class Ops(BotPlugin):
 
     @botcmd(admin_only=False)
     def ssh_keygen(self, msg, args):
-        _path = '{}/.ssh/{}'.format(os.getenv('HOME'), args)
+        _path = '.ssh/{}'.format(os.getenv('HOME'), args)
         _proc = subprocess.Popen(['ssh-keygen', '-f', _path, '-N', ''], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         self.send_card(_proc.stdout.read().decode(), in_reply_to=msg)
         self.send_card(_proc.stderr.read().decode(), in_reply_to=msg, color='red')
